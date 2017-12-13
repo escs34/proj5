@@ -61,7 +61,7 @@ def lineTracking():
 	while True:
 		count=0
 		turn_finish=False
-		car.engine(True, True, 45, 42)
+		car.engine(True, True, 42, 37)
 		time.sleep(0.001)
 
 		bit=2	
@@ -99,7 +99,7 @@ def lineTracking():
 							break
 				car.engine(True, True, 0,0)
 				time.sleep(0.05)
-				car.engine(True, True,45, 42)
+				car.engine(True, True,42, 38)
 		#print(bit, "bit_is")
 
 		#decision
