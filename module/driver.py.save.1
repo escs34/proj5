@@ -3,7 +3,7 @@
 #마지막 변경일: 11/1
 #작성자: 20132885 손태선
 #기능: 차를 운전함. 실행파일
-#입력: 좌회전 또는 우회전 키보드 입력
+z#입력: 좌회전 또는 우회전 키보드 입력
 #출력: car module로 방향, 속도 출력
 ######################################################################
 '''운전자가 휠을 돌리고 엑셀을 밟는 것 처럼 차에 신호를 보냅니다.
@@ -31,24 +31,18 @@ def turn(count):
 		direction=True
 	elif count==0:
 		return 0
-	time.sleep(0.2)
-	car.engine(direction, not direction,35,38)# 39, 39)
-	time.sleep(0.5)
+	time.sleep(0.1)#3)
 
-	timer=0
+	car.engine(direction, not direction,35,35)# 39, 39)
+	time.sleep(0.3)
 	while not (trackingModule.navigator()&4):
-		car.engine(direction, not direction,35,38)# 39, 39)
+		car.engine(direction, not direction,35,35)# 39, 39)
 		time.sleep(0.05)
-		#timer+=1
-		#if timer==6000:
-			#car.engine(direction, not direction,55,55)
-			#time.sleep(0.1)
-			#timer=0
 	car.engine(True, True, 0, 0)
 	time.sleep(0.3)
 
 	while not (trackingModule.navigator()&4):
-		car.engine(not direction, direction, 35,38)#39, 39)
+		car.engine(not direction, direction, 35,35)#39, 39)
 		time.sleep(0.0075)
 	car.engine(True,True,0,0)
 	time.sleep(0.3)
@@ -56,12 +50,11 @@ def turn(count):
 def lineTracking():
 	print("자동주행을 시작합니다.")
 	#전진후 좌우 교정과 판단을 동시에
-	
-	u_check=0
+
 	while True:
 		count=0
 		turn_finish=False
-		car.engine(True, True, 45, 42)
+		car.engine(True, True, 30, 33)#38, 42)
 		time.sleep(0.001)
 
 		bit=2	
@@ -99,13 +92,12 @@ def lineTracking():
 							break
 				car.engine(True, True, 0,0)
 				time.sleep(0.05)
-				car.engine(True, True,45, 42)
-		#print(bit, "bit_is")
+				car.engine(True, True, 30, 33)#38, 42)
+		print(bit, "cdcd")
 
 		#decision
-		count=trackingModule.where_to_go()#u_check)
-		#print(count)
-		u_check+=1
+		count=trackingModule.where_to_go()
+		print(count)
 
 		for a in reversed(trackingModule.li):
 			print(a)
@@ -115,7 +107,7 @@ def lineTracking():
 		
 		trackingModule.li_clear()
 
-		#print("after clear  ", trackingModule.li)
+		print("after clear  ", trackingModule.li)
 
 	print("자동주행을 마칩니다.")
 

@@ -132,93 +132,75 @@ def bitCount():
 	li2=[bit1(), bit2(), bit4(), bit8(), bit16()]
 	fiveth=li2[0]+li2[1]+li2[2]+li2[3]+li2[4]
 	li2.append(fiveth)
-	if len(li)==0 or li2 != li[len(li)-1]:
+	if li2 != li[len(li)-1]:
 		li.append(li2)
-		if len(li)>8:
-			del li[0]
+		del li[0]
 	return fiveth
 
-#subLi1=['dummy', 'dummy', 'dummy', 'dummy', 'dummy', 'dummy']
+subLi1=['dummy', 'dummy', 'dummy', 'dummy', 'dummy', 'dummy']
 
-#li=[]
+li=[subLi1, subLi1, subLi1, subLi1, subLi1, subLi1, subLi1, subLi1, subLi1, subLi1]
 
 
-
-def where_to_go():#u_check):
+def where_to_go():
 	#change way check right forward left Uturn
-	for index in range(len(li)-1, -1, -1):
-		if li[index][5]==5:
-			print("55")
-			return 1
-			'''for index2 in range(4, -1, -1):
-				if li[index][index2]!=li[index-1][index2] and index2>2:
-					print("right 5")
-					return 1
-			if li[len(li)-1][5]!=0:
-				print("go+forward 5")
-				return 2
-			else:
-				print("left 5")
-				return 2
-
-
-			print("right 5")
-			return 1'''
-		
-
-	#when4
-	for index in range(len(li)-1, -1, -1):
-		if li[index][5]==4:
-			for index2 in range(4, -1, -1):#여기랑 주석만 남기면됨
-				index3=index2####
-				for k in range(index, -1, -1):#이부분 테스트에 맞는지 확인
-					if li[k][5]==2:
-						index3=k
-						break
-				if li[index][index2]!=li[index3][index2] and index2>2:
-					print("test 4 R")
-					return 1						
-				'''if li[index][index2]!=li[index-1][index2] and index2>2:
-					print("right 4")
-					return 1'''
-
-			if li[len(li)-1][5]!=0:
-				print("go_forward 4")
-				return 0
-			else:
-				print("left 4")
-				return 2
-
-	for index in range(len(li)-1, -1, -1):
-		if li[index][5]==3:
+	for index in range(9, -1, -1):
+		if isinstance(li[index][5], str):
+			continue
+		if li[index][5]>2:
 			for index2 in range(4, -1, -1):
 				if li[index][index2]!=li[index-1][index2] and index2>2:
-					print("right 3")
 					return 1
-				#elif li[index][5]==0:
-				#	return 2
-			if li[len(li)-1][5]!=0:
-				print("go_forward 3")
+			if li[index+1][5]!=0:
 				return 0
 
 			else:
-				print("left 3")
 				return 2
 
-	print("no num exceed 2, u_turn")
 
-	return 2
-	#if u_check==1:
-	#	return 2
-	#else:
-	#	return 1
+	'''for a in li:#check when bit==5
+		if(a[5]==5):
+			return 1#. . . . .
 
-li=[]
+	for f in range(0, len(li)):#check when bit==4
+		if(li[f][5]==4):
+			for c in range(4, -1, -1):
+				if li[f][c]!=li[f-1][c]:
+					if c==4 or c==3:#o....  or ....o
+						return 1#o...o  or ...ooo
 
+				else:			#....o  or o....
+							#o...o  or oo...
+					if li[len(li)-1][5]==2:
+						return 0
+					else:
+						return 2
+
+	for b in range(0, len(li)):
+		if(li[b][5]==3):
+			for c in range(4, -1, -1):
+				if li[b][c]!=li[b-1][c]:
+					if c==4 or c==3:#oo... or o...o
+						return 1#oo..o or o..oo
+
+					else:		#...oo or o...o
+							#o..oo or oo..o
+						if li[len(li)-1][5]==2:
+							return 0
+						else:
+							return 2
+
+	if li[len(li)-1][5]==0:
+		return 1#U_turn ooooo
+
+	return 0#go_forward'''
 
 
 def li_clear():
-	li.clear()
+	#li=[subLi1, subLi2, subLi3, subLi4, subLi5, subLi6, subLi7, subLi8, subLi9, subLi10]
+	for i in range(10):
+		li.append(subLi1)
+		del li[0]
 
 if __name__ == "__main__":
 	while True:

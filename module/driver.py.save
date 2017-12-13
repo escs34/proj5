@@ -31,24 +31,18 @@ def turn(count):
 		direction=True
 	elif count==0:
 		return 0
-	time.sleep(0.2)
-	car.engine(direction, not direction,35,38)# 39, 39)
-	time.sleep(0.5)
+	time.sleep(0.3)
 
-	timer=0
+	car.engine(direction, not direction, 39, 39)
+	time.sleep(0.3)
 	while not (trackingModule.navigator()&4):
-		car.engine(direction, not direction,35,38)# 39, 39)
+		car.engine(direction, not direction, 39, 39)
 		time.sleep(0.05)
-		#timer+=1
-		#if timer==6000:
-			#car.engine(direction, not direction,55,55)
-			#time.sleep(0.1)
-			#timer=0
 	car.engine(True, True, 0, 0)
 	time.sleep(0.3)
 
 	while not (trackingModule.navigator()&4):
-		car.engine(not direction, direction, 35,38)#39, 39)
+		car.engine(not direction, direction, 39, 39)
 		time.sleep(0.0075)
 	car.engine(True,True,0,0)
 	time.sleep(0.3)
@@ -56,12 +50,11 @@ def turn(count):
 def lineTracking():
 	print("자동주행을 시작합니다.")
 	#전진후 좌우 교정과 판단을 동시에
-	
-	u_check=0
+
 	while True:
 		count=0
 		turn_finish=False
-		car.engine(True, True, 45, 42)
+		car.engine(True, True, 33, 33)#38, 42)
 		time.sleep(0.001)
 
 		bit=2	
@@ -88,7 +81,77 @@ def lineTracking():
 						car.engine(False, True, 35, 35)
 						time.sleep(0.005)
 						if trackingModule.bitCount()==0:
-							is_break=False
+							is_bre
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ak=False
 							break
 				else:
 					while trackingModule.bit4()!=True:
@@ -99,13 +162,12 @@ def lineTracking():
 							break
 				car.engine(True, True, 0,0)
 				time.sleep(0.05)
-				car.engine(True, True,45, 42)
-		#print(bit, "bit_is")
+				car.engine(True, True, 33, 33)#38, 42)
+		print(bit, "cdcd")
 
 		#decision
-		count=trackingModule.where_to_go()#u_check)
-		#print(count)
-		u_check+=1
+		count=trackingModule.where_to_go()
+		print(count)
 
 		for a in reversed(trackingModule.li):
 			print(a)
@@ -115,7 +177,7 @@ def lineTracking():
 		
 		trackingModule.li_clear()
 
-		#print("after clear  ", trackingModule.li)
+		print("after clear  ", trackingModule.li)
 
 	print("자동주행을 마칩니다.")
 

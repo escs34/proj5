@@ -26,58 +26,80 @@ def decision():#여기서 회전안해도되 판정 나올때 까지 회전 하�
 
 
 def turn(count):
+	#time.sleep(0.5)
+
+	########
 	direction=False
 	if count==1:#우회전
 		direction=True
-	elif count==0:
-		return 0
-	time.sleep(0.2)
-	car.engine(direction, not direction,35,38)# 39, 39)
+	time.sleep(0.5)
+	while not (trackingModule.navigator()&4):
+		car.engine(direction, not direction, 36, 39)
+		time.sleep(0.001)
+	car.engine(True, True, 0, 0)
 	time.sleep(0.5)
 
-	timer=0
 	while not (trackingModule.navigator()&4):
-		car.engine(direction, not direction,35,38)# 39, 39)
-		time.sleep(0.05)
-		#timer+=1
-		#if timer==6000:
-			#car.engine(direction, not direction,55,55)
-			#time.sleep(0.1)
-			#timer=0
-	car.engine(True, True, 0, 0)
-	time.sleep(0.3)
-
-	while not (trackingModule.navigator()&4):
-		car.engine(not direction, direction, 35,38)#39, 39)
-		time.sleep(0.0075)
+		car.engine(not direction, direction, 36, 39)
+		time.sleep(0.0001)
 	car.engine(True,True,0,0)
-	time.sleep(0.3)
+	time.sleep(0.5)
+
+
+	########
+
+	'''while count!=0:
+		#car.engine(True, True, 0, 0)
+		#time.sleep(0.1)
+
+		car.engine(True, False, 36, 36)#2연속 회전 시
+		time.sleep(0.5)
+
+		while not (trackingModule.navigator()&4):
+			car.engine(True, False, 36, 39)
+			time.sleep(0.001)
+		car.engine(True, True, 0, 0)
+		time.sleep(0.5)
+			
+		while not (trackingModule.navigator()&4):
+			car.engine(False, True, 36, 39)
+			time.sleep(0.0001)
+		car.engine(True, True, 0, 0)
+		time.sleep(0.5)
+
+		count-=1'''
 
 def lineTracking():
 	print("자동주행을 시작합니다.")
 	#전진후 좌우 교정과 판단을 동시에
-	
-	u_check=0
+
 	while True:
 		count=0
 		turn_finish=False
-		car.engine(True, True, 45, 42)
+		car.engine(True, True, 42, 42)
 		time.sleep(0.001)
 
 		bit=2	
 
-		is_break=True
-		while is_break:
+		count=0
+		while True:
 			bit=trackingModule.bitCount()
-			if bit>2 or bit==0:
-				bit=trackingModule.bitCount()
-				while True:
-					bit=trackingModule.bitCount()
-					if bit<3:#bit==1 or bit==0:
-						time.sleep(0.1)
-						trackingModule.bitCount()
-						break
+			#if bit>2:
+			#	print(bit)
+			if trackingModule.where_to_go()!=0:
 				break
+
+			'''if bit==5:
+				print("CC")
+				break
+			elif bit==0:	
+				print("jj")
+				break
+			elif bit>2:
+				print("more go", bit)
+				while bit!=0:
+					bit=trackingModule.bitCount()
+				break'''
 			li = trackingModule.li[len(trackingModule.li)-1]
 
 			if li[2]==False:
@@ -86,26 +108,20 @@ def lineTracking():
 				if li[1]==True:
 					while trackingModule.bit4()!=True:
 						car.engine(False, True, 35, 35)
-						time.sleep(0.005)
 						if trackingModule.bitCount()==0:
-							is_break=False
 							break
 				else:
 					while trackingModule.bit4()!=True:
 						car.engine(True, False, 35, 35)
-						time.sleep(0.005)
 						if trackingModule.bitCount()==0:
-							is_break=False
 							break
 				car.engine(True, True, 0,0)
 				time.sleep(0.05)
-				car.engine(True, True,45, 42)
-		#print(bit, "bit_is")
+				car.engine(True, True, 42, 42)
 
 		#decision
-		count=trackingModule.where_to_go()#u_check)
-		#print(count)
-		u_check+=1
+		count=trackingModule.where_to_go()
+		print(count)
 
 		for a in reversed(trackingModule.li):
 			print(a)
@@ -114,8 +130,13 @@ def lineTracking():
 		turn(count)
 		
 		trackingModule.li_clear()
+		#once=False
 
-		#print("after clear  ", trackingModule.li)
+		
+
+
+
+
 
 	print("자동주행을 마칩니다.")
 
